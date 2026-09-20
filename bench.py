@@ -25,32 +25,73 @@ DEFAULT_OUTPUT = Path("ket_qua_benchmark.txt")
 
 BENCHMARK_QUERIES = [
     {
+        "id": 1,
+        "kind": "hỏi điều kiện",
         "query": "Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào?",
         "metadata_filter": {"audience": "buyer"},
         "gold": "Trong 15 hoặc 30 ngày đầu kể từ ngày mua, tùy theo dòng sản phẩm, nếu sản phẩm được xác nhận lỗi phần cứng do nhà sản xuất thì được đổi mới miễn phí 100%.",
+        "gold_phrase": "Đổi mới miễn phí 100% nếu sản phẩm được xác nhận lỗi phần cứng do nhà sản xuất",
+        "expect_doc_id": "hoanghamobile-warranty-buyer",
     },
     {
+        "id": 2,
+        "kind": "tra số liệu",
         "query": "Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc để xác nhận phương án xử lý yêu cầu đổi trả?",
         "metadata_filter": {"audience": "seller"},
         "gold": "Nhà Bán có 02 ngày làm việc kể từ khi sản phẩm được cập nhật trạng thái cần Nhà Bán phản hồi để xác nhận phương án xử lý yêu cầu đổi, trả, bảo hành.",
+        "gold_phrase": "02 ngày làm việc kể từ khi mã yêu cầu ghi nhận",
+        "expect_doc_id": "tiki-seller-warranty-faq",
     },
     {
+        "id": 3,
+        "kind": "hỏi quy trình",
         "query": "Nếu Nhà Bán không phản hồi, Tiki sẽ xử lý yêu cầu của Khách Hàng như thế nào?",
         "metadata_filter": {"audience": "seller"},
-        "gold": "Tiki sẽ chủ động xử lý theo yêu cầu Khách Hàng và được quyền từ chối tiếp nhận các khiếu nại của Nhà Bán; nếu không có lý do hợp lệ, Tiki có thể bồi thường cho Khách Hàng.",
+        # Gold lấy từ FAQ mục 6 (dòng 54), KHÔNG phải mục 4 (dòng 40).
+        # Hai mục dễ lẫn nhưng khác điều kiện kích hoạt và khác hậu quả:
+        #   mục 4 = Nhà Bán không XÁC NHẬN PHƯƠNG ÁN trong 02 ngày -> Tiki chủ động xử lý
+        #   mục 6 = Nhà Bán KHÔNG PHẢN HỒI               -> Tiki hoàn tiền, cấn trừ kỳ sau
+        # Câu hỏi dùng chữ "không phản hồi" nên gold phải là mục 6.
+        # (Bản gốc của R2 ghép cả vế "bồi thường" từ dòng 36/82 — điều khoản bảo
+        #  hành quá hạn, khác ngữ cảnh hẳn — nên đã bỏ.)
+        "gold": "Tiki sẽ hoàn tiền cho Khách Hàng và không chịu trách nhiệm trong trường hợp Nhà Bán không "
+                "hoặc không thể thu hồi hàng hóa; số tiền hoàn trả được cấn trừ vào kỳ thanh toán tiếp theo của Nhà Bán.",
+        "gold_phrase": "Tiki sẽ hoàn tiền cho Khách Hàng và không chịu trách nhiệm",
+        "expect_doc_id": "tiki-seller-warranty-faq",
     },
     {
-        "query": "Nhà Bán xác nhận phương án xử lý yêu cầu đổi trả qua đâu trong hệ thống?",
-        "metadata_filter": {"audience": "seller"},
-        "gold": "Nhà Bán xác nhận phương án xử lý qua hệ thống Seller Center, vào mục Đơn hàng > Đổi trả bảo hành, tab Cần Nhà Bán phản hồi.",
-    },
-    {
-        "query": "Theo quy trình đổi mới của Hoàng Hà Mobile, khách hàng cần làm gì trước khi nhận sản phẩm mới?",
+        "id": 4,
+        "kind": "liệt kê",
+        # Thay câu "Nhà Bán xác nhận ... qua đâu trong hệ thống?": câu đó trùng
+        # chủ đề với câu 2 và 3 (đều là seller + xác nhận yêu cầu đổi trả), và
+        # bộ 5 câu đang thiếu hẳn dạng liệt kê.
+        "query": "Sản phẩm cần thỏa những điều kiện nào để được bảo hành miễn phí?",
         "metadata_filter": {"audience": "buyer"},
-        "gold": "Khách hàng mang sản phẩm đến cửa hàng, nhân viên tiếp nhận và thẩm định lỗi ngay tại chỗ; nếu lỗi do nhà sản xuất và đủ điều kiện thì tiến hành đổi sản phẩm mới.",
+        "gold": "Lỗi kỹ thuật do nhà sản xuất; còn trong thời hạn bảo hành; có hóa đơn điện tử hoặc mã đơn hàng; "
+                "với hàng điện gia dụng thì phiếu/tem bảo hành và tem niêm phong còn nguyên vẹn.",
+        "gold_phrase": "Sản phẩm được bảo hành miễn phí nếu sản phẩm đó hội đủ các điều kiện sau",
+        "expect_doc_id": "shopee-warranty-buyer",
+    },
+    {
+        "id": 5,
+        "kind": "câu cần lọc metadata",
+        # Câu hỏi KHÔNG nêu người hỏi là ai, trong khi cả hai phía corpus đều nói
+        # về thời hạn bảo hành bằng cùng từ vựng nhưng cho đáp án khác nhau:
+        #   buyer  -> 12 tháng máy mới (Hoàng Hà) / 20-45 ngày làm việc (Shopee)
+        #   seller -> Nhà Bán cam kết tối đa không quá 30 ngày
+        # Không lọc thì top-3 lẫn cả hai và agent trả lời sai đối tượng.
+        # Thay câu "Theo quy trình đổi mới của Hoàng Hà Mobile...": câu đó nêu
+        # đích danh Hoàng Hà nên embedding tự tách được, filter thành thừa.
+        "query": "Thời gian bảo hành tối đa là bao lâu?",
+        "metadata_filter": {"audience": "seller"},
+        "gold": "Nhà Bán cam kết thời gian bảo hành tối đa không quá 30 ngày, tính từ khi Nhà Bán nhận được hàng "
+                "đến khi bảo hành xong, không tính thời gian vận chuyển.",
+        "gold_phrase": "tối đa không quá 30 ngày",
+        "expect_doc_id": "tiki-seller-warranty-faq",
+        # Chạy hai lần (có lọc / không lọc) để lấy bằng chứng cho mục 3 REPORT_NHOM.
+        "demo_filter_effect": True,
     },
 ]
-
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
     """Split a Markdown file into front matter and body.

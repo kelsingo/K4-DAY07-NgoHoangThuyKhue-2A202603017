@@ -2,51 +2,51 @@ Loaded 111 chunks from 6 markdown files.
 
 QUERY: Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào?
 FILTER: {'audience': 'buyer'}
-  1. score=0.267602 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#9
-     snippet: ## III. Quy định bảo hành đối với quà khuyến mại **1. Quà tặng là sản phẩm điện tử chính hãng (có chế độ bảo hành của nhà sản xuất)** — ví dụ: loa, tai nghe, pin dự phòng, điện th
-  2. score=0.238960 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#12
-     snippet: ## IV. Chính sách về bảo hành sản phẩm Hoàng Hà Mobile cam kết tất cả các sản phẩm bán ra đều là sản phẩm chính hãng và nhận được các chế độ bảo hành chính hãng. Quý khách có thể
-  3. score=0.236721 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#8
-     snippet: ## II. Quy định bảo hành đối với linh kiện pin và màn hình - Điều kiện để được bảo hành đối với linh kiện pin thay thế: chu kỳ sạc dưới 500 lần, tình trạng pin trên 80%. - Đối vớ
+  1. score=0.862955 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#2
+     snippet: ### 1. Đối tượng áp dụng Tất cả sản phẩm điện thoại, máy tính bảng, đồng hồ thông minh, vòng đeo tay… mua mới tại Hoàng Hà Mobile.
+  2. score=0.854279 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#0
+     snippet: # Chính sách bảo hành Hoàng Hà Mobile dành cho khách mua Áp dụng từ ngày 29/09/2025. Chính sách bảo hành của Hoàng Hà Mobile áp dụng với tất cả các sản phẩm bán ra tại hệ thống.
+  3. score=0.853576 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#14
+     snippet: ### Nguyên tắc bảo hành - Sản phẩm được bảo hành miễn phí nếu sản phẩm đó còn thời hạn bảo hành, được tính từ ngày quý khách mua hàng. - Khi đổi sản phẩm, thời hạn bảo hành còn l
 GOLD: Trong 15 hoặc 30 ngày đầu kể từ ngày mua, tùy theo dòng sản phẩm, nếu sản phẩm được xác nhận lỗi phần cứng do nhà sản xuất thì được đổi mới miễn phí 100%.
 
 QUERY: Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc để xác nhận phương án xử lý yêu cầu đổi trả?
 FILTER: {'audience': 'seller'}
-  1. score=0.309930 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#16
-     snippet: ## III. MÔ HÌNH DROPSHIP
-  2. score=0.285087 doc_id=tiki-seller-warranty-dropship chunk_id=tiki-seller-warranty-dropship#1
-     snippet: ## I. QUY ĐỊNH CHUNG
-  3. score=0.285087 doc_id=tiki-seller-warranty-sd chunk_id=tiki-seller-warranty-sd#1
-     snippet: ## I. QUY ĐỊNH CHUNG
+  1. score=0.847932 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#24
+     snippet: ### 8. Nhà Bán có thời gian bao lâu để xác nhận yêu cầu đổi, trả, bảo hành? Với đơn hàng đổi, trả, bảo hành KHÔNG thu hồi sản phẩm: 02 ngày làm việc kể từ khi mã yêu cầu ghi nhận
+  2. score=0.828511 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#21
+     snippet: ### 4. Nhà Bán xác nhận phương án xử lý yêu cầu đổi, trả, bảo hành qua đâu? Nhà Bán xác nhận phương án xử lý yêu cầu đổi, trả, bảo hành qua hệ thống Seller Center > Đơn hàng > Đổ
+  3. score=0.810909 doc_id=tiki-seller-warranty-dropship chunk_id=tiki-seller-warranty-dropship#11
+     snippet: ### 1. Trường hợp KHÔNG thu hồi vật lý: Nhà Bán xác nhận thông tin trên hệ thống trong 02 ngày làm việc kể từ khi yêu cầu đổi, trả, bảo hành được tạo.
 GOLD: Nhà Bán có 02 ngày làm việc kể từ khi sản phẩm được cập nhật trạng thái cần Nhà Bán phản hồi để xác nhận phương án xử lý yêu cầu đổi, trả, bảo hành.
 
 QUERY: Nếu Nhà Bán không phản hồi, Tiki sẽ xử lý yêu cầu của Khách Hàng như thế nào?
 FILTER: {'audience': 'seller'}
-  1. score=0.333611 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#0
-     snippet: # Câu hỏi thường gặp về xử lý đổi trả bảo hành cho Nhà Bán Hàng Bài viết dưới đây tổng hợp các câu hỏi thường gặp liên quan đến việc đổi – trả – bảo hành trên Tiki, giúp Nhà Bán
-  2. score=0.301551 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#10
-     snippet: ### 9. Những sản phẩm nào sẽ không cho phép Khách hàng được trả hàng theo nhu cầu? Nhà Bán tham khảo Chính sách đổi – trả – bảo hành của Tiki tại đây để hiểu rõ hơn về điều kiện
-  3. score=0.233792 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#25
-     snippet: ### 8. Trường hợp Nhà Bán thương lượng với Khách hàng một phương án đổi trả khác với yêu cầu ban đầu và được đồng ý, Nhà Bán cần làm gì? Nhà Bán bấm “Khiếu nại/ Đề xuất giải pháp
-GOLD: Tiki sẽ chủ động xử lý theo yêu cầu Khách Hàng và được quyền từ chối tiếp nhận các khiếu nại của Nhà Bán; nếu không có lý do hợp lệ, Tiki có thể bồi thường cho Khách Hàng.
+  1. score=0.875547 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#5
+     snippet: ### 4. Trường hợp Nhà Bán không xác nhận phương án xử lý trong 02 ngày làm việc, Tiki sẽ xử lý như thế nào? Tiki sẽ chủ động xử lý theo yêu cầu Khách hàng (hoàn tiền hoặc tạo đơn
+  2. score=0.870955 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#7
+     snippet: ### 6. Nếu Nhà Bán không phản hồi yêu cầu đổi trả bảo hành thì Tiki sẽ xử lý như thế nào? Trong trường hợp Nhà Bán Hàng không phản hồi, Tiki sẽ hoàn tiền cho Khách Hàng và không
+  3. score=0.824281 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#3
+     snippet: ### 2. Trường hợp Nhà Bán từ chối yêu cầu đổi – trả – bảo hành của Khách hàng mà không cung cấp được bằng chứng thỏa đáng trong thời gian quy định, Tiki sẽ xử lý như thế nào? Phí
+GOLD: Tiki sẽ hoàn tiền cho Khách Hàng và không chịu trách nhiệm trong trường hợp Nhà Bán không hoặc không thể thu hồi hàng hóa; số tiền hoàn trả được cấn trừ vào kỳ thanh toán tiếp theo của Nhà Bán.
 
-QUERY: Nhà Bán xác nhận phương án xử lý yêu cầu đổi trả qua đâu trong hệ thống?
-FILTER: {'audience': 'seller'}
-  1. score=0.234556 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#12
-     snippet: ### 11. Nhà Bán cần lưu trữ video đóng gói hàng hóa trong bao lâu? Để đảm bảo quyền lợi tối đa, Tiki khuyến khích Nhà Bán lưu trữ clip đóng gói đơn hàng trong tối thiểu 45 ngày (
-  2. score=0.166351 doc_id=tiki-seller-warranty-dropship chunk_id=tiki-seller-warranty-dropship#13
-     snippet: ### 2. Trường hợp CÓ thu hồi vật lý: Trường hợp Nhà Bán từ chối yêu cầu đổi trả của khách hàng, các mã đổi trả sẽ được chuyển qua tab này. Tiki sẽ kiểm tra, xác minh chứng cứ, biê
-  3. score=0.165547 doc_id=tiki-seller-warranty-sd chunk_id=tiki-seller-warranty-sd#3
-     snippet: ### 1. Điều kiện áp dụng Nếu lỗi thuộc về Nhà Sản Xuất hoặc từ Nhà Bán không thể bảo hành, Nhà Bán hoàn trả cho khách hàng sản phẩm mới tương tự hoặc Tiki xử lý hoàn tiền cho khác
-GOLD: Nhà Bán xác nhận phương án xử lý qua hệ thống Seller Center, vào mục Đơn hàng > Đổi trả bảo hành, tab Cần Nhà Bán phản hồi.
-
-QUERY: Theo quy trình đổi mới của Hoàng Hà Mobile, khách hàng cần làm gì trước khi nhận sản phẩm mới?
+QUERY: Sản phẩm cần thỏa những điều kiện nào để được bảo hành miễn phí?
 FILTER: {'audience': 'buyer'}
-  1. score=0.210950 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#9
-     snippet: ## III. Quy định bảo hành đối với quà khuyến mại **1. Quà tặng là sản phẩm điện tử chính hãng (có chế độ bảo hành của nhà sản xuất)** — ví dụ: loa, tai nghe, pin dự phòng, điện th
-  2. score=0.192401 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#5
-     snippet: ### 3. Quy trình đổi sản phẩm "Lỗi Đổi Liền" - Bước 1: Khách hàng mang sản phẩm đến bất kỳ cửa hàng Hoàng Hà Mobile cùng hộp và đầy đủ phụ kiện. - Bước 2: Nhân viên tiếp nhận và
-  3. score=0.179650 doc_id=shopee-warranty-buyer chunk_id=shopee-warranty-buyer#1
+  1. score=0.864163 doc_id=shopee-warranty-buyer chunk_id=shopee-warranty-buyer#1
      snippet: ## 1. Điều kiện bảo hành Sản phẩm được bảo hành miễn phí nếu sản phẩm đó hội đủ các điều kiện sau: - Sản phẩm bị lỗi kỹ thuật do nhà sản xuất. - Còn trong thời hạn bảo hành (trê
-GOLD: Khách hàng mang sản phẩm đến cửa hàng, nhân viên tiếp nhận và thẩm định lỗi ngay tại chỗ; nếu lỗi do nhà sản xuất và đủ điều kiện thì tiến hành đổi sản phẩm mới.
+  2. score=0.816195 doc_id=hoanghamobile-warranty-buyer chunk_id=hoanghamobile-warranty-buyer#14
+     snippet: ### Nguyên tắc bảo hành - Sản phẩm được bảo hành miễn phí nếu sản phẩm đó còn thời hạn bảo hành, được tính từ ngày quý khách mua hàng. - Khi đổi sản phẩm, thời hạn bảo hành còn l
+  3. score=0.810042 doc_id=shopee-warranty-buyer chunk_id=shopee-warranty-buyer#5
+     snippet: ## 5. Thời gian bảo hành
+GOLD: Lỗi kỹ thuật do nhà sản xuất; còn trong thời hạn bảo hành; có hóa đơn điện tử hoặc mã đơn hàng; với hàng điện gia dụng thì phiếu/tem bảo hành và tem niêm phong còn nguyên vẹn.
+
+QUERY: Thời gian bảo hành tối đa là bao lâu?
+FILTER: {'audience': 'seller'}
+  1. score=0.791027 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#6
+     snippet: ### 5. Thời gian Nhà Bán cam kết bảo hành là bao lâu? Nhà Bán cam kết thời gian bảo hành (tối đa không quá 30 ngày), thông báo cho Tiki và Khách hàng, sau đó gửi trả hàng hóa về
+  2. score=0.700585 doc_id=tiki-seller-warranty-faq chunk_id=tiki-seller-warranty-faq#8
+     snippet: ### 7. Nếu 01 sản phẩm đã hoàn thành bảo hành 02 lần và bị Khách Hàng yêu cầu bảo hành lần thứ 03 và lỗi không do Khách Hàng thì Nhà Bán cần làm gì? Nếu 01 sản phẩm đã hoàn thành
+  3. score=0.698301 doc_id=tiki-seller-warranty-dropship chunk_id=tiki-seller-warranty-dropship#3
+     snippet: ### 1. Điều kiện áp dụng Đối với một số trường hợp đổi trả theo hạn mức giá trị đền bù, Tiki sẽ thay mặt Nhà Bán xem xét và thực hiện hoàn tiền nhanh trước cho khách hàng và thông
+GOLD: Nhà Bán cam kết thời gian bảo hành tối đa không quá 30 ngày, tính từ khi Nhà Bán nhận được hàng đến khi bảo hành xong, không tính thời gian vận chuyển.
 

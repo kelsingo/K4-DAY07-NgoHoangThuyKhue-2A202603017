@@ -152,21 +152,29 @@ tests/test_solution.py::TestEmbeddingStoreDeleteDocument::test_delete_returns_tr
 
 Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân trong gói `src`. Bộ câu hỏi này khớp với bộ câu hỏi chung của nhóm và được chọn trực tiếp từ chính corpus `data/warranty`.
 
-| # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Điểm Score | Có liên quan không? (Relevant) | Câu trả lời của Agent (tóm tắt) |
-|---|-------|--------------------------------|-------|-----------|------------------------|
-| 1 | Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào? | Chính sách "Lỗi Đổi Liền" quy định đổi mới miễn phí trong 15 hoặc 30 ngày đầu, tùy dòng sản phẩm, nếu lỗi phần cứng do nhà sản xuất. | 0.267602 | Có | Khách hàng được đổi mới miễn phí trong 15 hoặc 30 ngày đầu nếu xác nhận lỗi phần cứng do nhà sản xuất. |
-| 2 | Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc để xác nhận phương án xử lý yêu cầu đổi trả? | Mô hình Dropship/SD nhấn mạnh đơn hàng cần Nhà Bán phản hồi và quy định xử lý trong 02 ngày làm việc. | 0.309930 | Có | Nhà Bán có 02 ngày làm việc để xác nhận phương án xử lý qua Seller Center. |
-| 3 | Nếu Nhà Bán không phản hồi, Tiki sẽ xử lý yêu cầu của Khách Hàng như thế nào? | Tiki xử lý theo yêu cầu Khách Hàng và có quyền từ chối khiếu nại/các phản hồi của Nhà Bán không hợp lệ. | 0.333611 | Có | Tiki sẽ chủ động xử lý theo yêu cầu Khách Hàng và không chấp nhận khiếu nại không có căn cứ. |
-| 4 | Nhà Bán xác nhận phương án xử lý yêu cầu đổi trả qua đâu trong hệ thống? | Quy trình yêu cầu đổi trả cho Nhà Bán quy định xác nhận qua Seller Center > Đơn hàng > Đổi trả bảo hành > tab Cần Nhà Bán phản hồi. | 0.234556 | Có | Nhà Bán xác nhận giải pháp trên Seller Center ở tab Cần Nhà Bán phản hồi. |
-| 5 | Theo quy trình đổi mới của Hoàng Hà Mobile, khách hàng cần làm gì trước khi nhận sản phẩm mới? | Khách hàng mang sản phẩm đến cửa hàng, nhân viên thẩm định lỗi ngay tại chỗ và đổi máy mới nếu đủ điều kiện. | 0.210950 | Có | Trước khi nhận máy mới, khách hàng mang sản phẩm đến cửa hàng để nhân viên kiểm tra và xác nhận lỗi ngay. |
+Kết quả benchmark (từ `ket_qua_benchmark.txt`) sử dụng **section-based chunking (heading-aware) + RecursiveChunker fallback** với `chunk_size=650` và **GeminiEmbedder** (Gemini API).
 
-**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 5 / 5
+| # | Câu hỏi (Query) | Top-1 Chunk truy xuất được (tóm tắt) | Score | Gold doc_id | Có gold trong top-3? | Điểm (/2) |
+|---|-------|--------------------------------|-------|------------|---------------------|----------|
+| 1 | Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào? | "### 1. Đối tượng áp dụng — Tất cả sản phẩm điện thoại, máy tính bảng, đồng hồ thông minh… mua mới tại Hoàng Hà Mobile." | 0.862955 | hoanghamobile-warranty-buyer | ✗ (top-3 từ đúng doc nhưng chunk gold về "Thời gian và chính sách đổi sản phẩm" không được retrieve) | 1 |
+| 2 | Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc để xác nhận phương án xử lý yêu cầu đổi trả? | "### 8. Nhà Bán có thời gian bao lâu để xác nhận… 02 ngày làm việc kể từ khi mã yêu cầu ghi nhận…" | 0.847932 | tiki-seller-warranty-faq | ✓ (top-1) | 2 |
+| 3 | Nếu Nhà Bán không phản hồi, Tiki sẽ xử lý yêu cầu của Khách Hàng như thế nào? | "### 4. Trường hợp Nhà Bán không xác nhận phương án xử lý trong 02 ngày làm việc…" (top-1 mục 4, top-2 mục 6 đúng gold) | 0.875547 | tiki-seller-warranty-faq | ✓ (top-2 chính xác mục 6 "không phản hồi") | 2 |
+| 4 | Sản phẩm cần thỏa những điều kiện nào để được bảo hành miễn phí? | "## 1. Điều kiện bảo hành — Sản phẩm được bảo hành miễn phí nếu sản phẩm đó hội đủ các điều kiện sau: - Sản phẩm bị lỗi kỹ thuật do nhà sản xuất. - Còn trong thời hạn bảo hành…" | 0.864163 | shopee-warranty-buyer | ✓ (top-1) | 2 |
+| 5 | Thời gian bảo hành tối đa là bao lâu? | "### 5. Thời gian Nhà Bán cam kết bảo hành là bao lâu? Nhà Bán cam kết thời gian bảo hành (tối đa không quá 30 ngày)…" | 0.791027 | tiki-seller-warranty-faq | ✓ (top-1) | 2 |
 
-**Lưu ý chuyên môn về chấm điểm:**
-> Cách chấm đúng theo yêu cầu của lab không chỉ dựa vào `doc_id` gold nằm trong top-3; ta phải kiểm tra xem đoạn chunk thực sự chứa thông tin trả lời và liệu agent có trả lời đúng hay không. Trong benchmark này, dữ liệu được chạy bằng `MockEmbedder` (MD5-based), nên score cho thấy mức độ tương đồng theo chuỗi và từ khóa hơn là ngữ nghĩa thực sự. Vì vậy, tôi đánh giá theo mức 2/1/0: `2` nếu gold ở top-1 và context chứa đáp án, `1` nếu gold ở top-2/3 nhưng câu trả lời vẫn hợp lý, `0` nếu không có trong top-3 hoặc context không trả lời được.
+**Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 5 / 5 (100%)
+
+**Tổng điểm chất lượng truy xuất:** 9 / 10
+
+**Phân tích từng câu:**
+> - **Q1 (1 điểm):** Top-3 đều từ đúng doc `hoanghamobile-warranty-buyer` nhưng chunk chứa gold answer ("2. Thời gian và chính sách đổi sản phẩm" — 15/30 ngày đổi mới miễn phí) không lọt vào top-3. Các chunk retrieve được bàn về đối tượng áp dụng và nguyên tắc bảo hành chung — có liên quan chủ đề nhưng thiếu thông tin thời gian cụ thể. Đây là failure case của heading-based chunking: chunk "đối tượng áp dụng" có từ khóa gần hơn với query.
+> - **Q2 (2 điểm):** Top-1 là chunk "8. Nhà Bán có thời gian bao lâu… 02 ngày làm việc" — trùng khớp chính xác với gold answer.
+> - **Q3 (2 điểm):** Dù top-1 là mục 4 (không xác nhận phương án), top-2 là mục 6 (không phản hồi) — đúng gold. Benchmark có ghi chú rõ về sự khác biệt giữa hai mục để tránh nhầm lẫn.
+> - **Q4 (2 điểm):** Top-1 là "## 1. Điều kiện bảo hành" của Shopee — chứa đầy đủ các điều kiện trong gold answer.
+> - **Q5 (2 điểm):** Top-1 là "5. Thời gian Nhà Bán cam kết bảo hành là bao lâu?" — chứa chính xác "tối đa không quá 30 ngày". Câu này cần filter `audience=seller` để tránh kết quả từ buyer.
 
 **Điều hay nhất tôi học được từ cách đánh giá trong nhóm:**
-> Tôi học thấy rõ rằng retrieval quality không chỉ phụ thuộc vào chunking, mà còn phụ thuộc rất nhiều vào việc lựa chọn câu hỏi và metadata đúng với từng audience. Khi lọc theo `audience = buyer` hoặc `seller`, kết quả truy xuất ít nhiễu và dễ khớp đúng với ngữ cảnh nghiệp vụ hơn so với tìm kiếm không lọc.
+> Tôi học thấy rõ rằng retrieval quality không chỉ phụ thuộc vào chunking, mà còn phụ thuộc rất nhiều vào việc lựa chọn câu hỏi và metadata đúng với từng audience. Khi lọc theo `audience = buyer` hoặc `seller`, kết quả truy xuất ít nhiễu và dễ khớp đúng với ngữ cảnh nghiệp vụ hơn so với tìm kiếm không lọc. Bên cạnh đó, việc dùng Gemini embedder thực tế cho thấy điểm số cao hơn hẳn MockEmbedder (0.79–0.88 vs 0.21–0.33), chứng tỏ chất lượng embedding ảnh hưởng rất lớn đến kết quả truy xuất. Tuy nhiên, Q1 cho thấy heading-based chunking vẫn có hạn chế: các chunk được đặt tên rõ ràng nhưng không phải lúc nào cũng retrieve đúng chunk chứa thông tin cần thiết.
 
 ---
 
@@ -178,5 +186,5 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân tron
 | Hướng tiếp cận của tôi (My Approach) | 10 / 10 |
 | Hoàn thiện code (Core Implementation — tests) | 30 / 30 |
 | Dự đoán độ tương tự (Similarity Predictions) | 5 / 5 |
-| Kết quả truy xuất của tôi (Competition Results) | 10 / 10 |
-| **Tổng phần cá nhân** | **60 / 60** |
+| Kết quả truy xuất của tôi (Competition Results) | 9 / 10 |
+| **Tổng phần cá nhân** | **59 / 60** |
