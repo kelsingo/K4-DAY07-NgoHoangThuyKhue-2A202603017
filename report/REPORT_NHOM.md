@@ -111,11 +111,11 @@ results = store.search_with_filter(
 
 | # | Câu hỏi | Chiến lược tốt nhất cho câu này | Có chunk liên quan trong top-3? | Ghi chú |
 |---|---------|-------------------------------|-------------------------------|---------|
-| 1 | Theo chính sách Hoàng Hà Mobile... | RecursiveChunker + filter audience=buyer | Có | Top-3 chứa thông tin về cột mốc thời gian và điều kiện đổi mới. |
-| 2 | Trong mô hình Seller Center... | RecursiveChunker + filter audience=seller | Có | Top-3 có đoạn mô tả thời hạn 02 ngày làm việc trong phản hồi Seller Center. |
-| 3 | Nếu Nhà Bán không phản hồi... | RecursiveChunker + filter audience=seller | Có | Top-3 chứa biện pháp xử lý do Tiki chủ động thực hiện. |
-| 4 | Nhà Bán xác nhận qua đâu... | RecursiveChunker + filter audience=seller | Có | Top-3 nhắc đến tab Cần Nhà Bán phản hồi trong Seller Center. |
-| 5 | Theo quy trình đổi mới của Hoàng Hà Mobile... | RecursiveChunker + filter audience=buyer | Có | Top-3 nêu rõ bước mang hàng đến cửa hàng và thẩm định lỗi. |
+| 1 | Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào? | RecursiveChunker + filter audience=buyer | Có | Top-3 chứa thông tin về cột mốc thời gian và điều kiện đổi mới. |
+| 2 | Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc để xác nhận phương án xử lý yêu cầu đổi trả? | RecursiveChunker + filter audience=seller | Có | Top-3 có đoạn mô tả thời hạn 02 ngày làm việc trong phản hồi Seller Center. |
+| 3 | Nếu Nhà Bán không phản hồi, Tiki sẽ xử lý yêu cầu của Khách Hàng như thế nào? | RecursiveChunker + filter audience=seller | Có | Top-3 chứa biện pháp xử lý do Tiki chủ động thực hiện. |
+| 4 | Nhà Bán xác nhận phương án xử lý yêu cầu đổi trả qua đâu trong hệ thống? | RecursiveChunker + filter audience=seller | Có | Top-3 nhắc đến tab Cần Nhà Bán phản hồi trong Seller Center. |
+| 5 | Theo quy trình đổi mới của Hoàng Hà Mobile, khách hàng cần làm gì trước khi nhận sản phẩm mới? | RecursiveChunker + filter audience=buyer | Có | Top-3 nêu rõ bước mang hàng đến cửa hàng và thẩm định lỗi. |
 
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
 > Có, metadata `audience` giúp ích rất nhiều cho các câu hỏi theo mục tiêu người dùng. Ví dụ Q1 và Q5 nên lọc `buyer` để tránh các nội dung liên quan đến Seller Center; Q2, Q3, Q4 nên lọc `seller` để hạn chế kết quả dành cho khách mua. Khi bộ lọc đúng, độ tương đồng không còn bị nhiễu bởi các nghĩa vụ khác nhau trong cùng chủ đề đổi trả.
