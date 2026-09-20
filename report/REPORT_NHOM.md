@@ -83,6 +83,12 @@ results = store.search_with_filter(
 **Chiến lược nào tốt nhất cho chủ đề này? Tại sao?**
 > Với corpus chính sách bảo hành, chiến lược `RecursiveChunker` kết hợp lọc `audience` hoạt động tốt nhất vì nội dung có cấu trúc rõ: tiêu đề > mục > quy định > điều kiện. Cách này giữ được bối cảnh của các đoạn pháp lý và giảm sai lệch khi cùng một chủ đề xuất hiện ở nhiều mô hình vận hành khác nhau.
 
+**Failure case thật đã quan sát:**
+> Câu hỏi "Theo quy trình đổi mới của Hoàng Hà Mobile, khách hàng cần làm gì trước khi nhận sản phẩm mới?" là một ví dụ rõ ràng về lỗi hỏng khi không lọc `audience`. Nếu chạy không filter, top-3 bị chiếm bởi các chunk của Tiki seller về "đổi trả", "đổi mới" và "xử lý khiếu nại"; khi đó trả lời agent bị lệch khỏi chính sách mua hàng của Hoàng Hà Mobile. Đây là failure case vì nội dung top-3 vẫn cùng chủ đề "đổi mới" nhưng không chứa thông tin thực sự cần trả lời. Sửa đề xuất: duy trì metadata `audience`, và khi câu hỏi có tên nhà bán / nhà cung cấp cụ thể thì thêm điều kiện lọc theo `doc_id` hoặc `title` để tách rõ buyer/seller. 
+
+**Lưu ý về mock embedding:**
+> `MockEmbedder` dùng MD5 trên chuỗi, nên nó không nắm ngữ nghĩa thực sự. Vì vậy, các chỉ số top-k ở đây nên đọc như tín hiệu gần với từ khóa và cấu trúc văn bản hơn là độ tương đồng ngữ nghĩa đúng chuẩn. Phần phân tích trong báo cáo này chú trọng vào `count`, `avg_length`, `metadata filter`, và mức độ câu trả lời chứa dữ kiện đúng hơn là tin tưởng tuyệt đối vào score số.
+
 ---
 
 ## 3. Câu hỏi đánh giá & Chất lượng truy xuất (Retrieval Quality) — Nhóm (10 điểm)
@@ -114,18 +120,28 @@ results = store.search_with_filter(
 **Lọc bằng metadata có giúp ích không? Ở câu hỏi nào?**
 > Có, metadata `audience` giúp ích rất nhiều cho các câu hỏi theo mục tiêu người dùng. Ví dụ Q1 và Q5 nên lọc `buyer` để tránh các nội dung liên quan đến Seller Center; Q2, Q3, Q4 nên lọc `seller` để hạn chế kết quả dành cho khách mua. Khi bộ lọc đúng, độ tương đồng không còn bị nhiễu bởi các nghĩa vụ khác nhau trong cùng chủ đề đổi trả.
 
+### A/B kiểm chứng filter `audience` (bắt buộc)
+
+| Câu hỏi | Với filter | Không filter | Kết luận |
+|---|---|---|---|
+| Q1: "Theo chính sách Hoàng Hà Mobile, khách hàng được đổi mới miễn phí trong thời gian nào?" | `['hoanghamobile-warranty-buyer', 'hoanghamobile-warranty-buyer', 'hoanghamobile-warranty-buyer']` | `['tiki-seller-warranty-faq', 'tiki-seller-warranty-faq', 'tiki-seller-warranty-faq']` | Khác hẳn; filter giúp rất nhiều vì không filter bị lôi vào tài liệu seller. |
+| Q2: "Trong mô hình Seller Center, Nhà Bán có bao nhiêu ngày làm việc..." | `['tiki-seller-warranty-faq', 'tiki-seller-warranty-dropship', 'tiki-seller-warranty-sd']` | `['hoanghamobile-warranty-buyer', 'tiki-seller-warranty-faq', 'tiki-seller-warranty-dropship']` | Filter giúp ép top-3 về đúng miền Seller Center. |
+| Q3: "Nếu Nhà Bán không phản hồi..." | `['tiki-seller-warranty-faq', 'tiki-seller-warranty-faq', 'tiki-seller-warranty-faq']` | `['tiki-seller-warranty-faq', 'tiki-seller-warranty-faq', 'tiki-seller-warranty-faq']` | Hai lần giống nhau; đây là trường hợp filter không thực sự cần thiết vì câu hỏi đã bị ràng buộc bởi từ khóa "Nhà Bán" và "Tiki". |
+
+> Kết luận: filter `audience` là có ích cho câu hỏi buyer/seller rõ ràng; nhưng nếu câu hỏi đã quá cụ thể và chủ yếu tập trung vào một hệ sinh thái duy nhất, filter có thể không tạo sự chênh lệch rõ rệt, và đó là dấu hiệu cần kiểm tra lại câu hỏi hoặc cách chia metadata. 
+
 ---
 
 ## 4. Thuyết trình (Demo) & Bài học nhóm — Nhóm (5 điểm)
 
 **Những phân tích (insights) hay nhất nhóm sẽ trình bày:**
-> *Liệt kê 2-3 ý:*
+> 1. `MockEmbedder` dựa trên MD5 tạo ra các điểm tương đồng theo chuỗi và từ khóa hơn là ngữ nghĩa thực sự, nên không thể đánh giá tuyệt đối độ chính xác của retrieval. 2. Metadata `audience` là một kỹ thuật cực kỳ hiệu quả khi nhiều tài liệu cùng nói về "đổi trả" nhưng phục vụ người mua hoặc Nhà Bán khác nhau. 3. Việc chấm điểm phải kiểm tra cả context và câu trả lời gold, không chỉ `doc_id` của tài liệu; nếu chỉ nhìn `doc_id`, ta dễ bị đánh giá quá cao dù chunk thực tế không chứa câu trả lời.
 
 **Bài học rút ra khi so sánh trong nhóm:**
-> *Viết 2-3 câu — cùng tài liệu nhưng chiến lược khác nhau dẫn tới khác biệt gì?*
+> Cùng một bộ dữ liệu nhưng khác chiến lược chunking dẫn tới chênh lệch lớn trong top-k, đặc biệt ở các câu hỏi có từ khóa chung như "đổi trả". Với corpora có cấu trúc như chính sách bảo hành, `RecursiveChunker` giữ tiêu đề + điều kiện tốt hơn và kết hợp filter metadata giúp giảm nhiễu đáng kể. Khi không có filter, các câu hỏi buyer dễ bị lôi vào tài liệu seller vì cùng một chủ đề nhưng hoàn cảnh khác nhau.
 
 **Nếu làm lại, nhóm sẽ thay đổi gì trong chiến lược dữ liệu (data strategy)?**
-> *Viết 2-3 câu:*
+> Chúng tôi sẽ tách metadata `audience` và `document_type` rõ ràng hơn, đồng thời thêm tiêu đề / subheading vào chunk để tạo thông tin ngữ cảnh càng cụ thể càng tốt. Ngoài ra, nếu dùng embedder thực, chúng tôi sẽ chạy benchmark trên một model có ngữ nghĩa tốt hơn và dùng các câu hỏi đặc thù để kiểm tra sự khác biệt giữa `with filter` và `without filter` một cách chính xác hơn.
 
 ---
 
@@ -133,8 +149,8 @@ results = store.search_with_filter(
 
 | Tiêu chí | Điểm tự đánh giá |
 |----------|-------------------|
-| Lựa chọn tài liệu (Document Set Quality) | / 10 |
-| Thiết kế chiến lược (Strategy Design) | / 15 |
-| Chất lượng truy xuất (Retrieval Quality) | / 10 |
-| Thuyết trình (Demo) | / 5 |
-| **Tổng phần nhóm** | **/ 40** |
+| Lựa chọn tài liệu (Document Set Quality) | 10 / 10 |
+| Thiết kế chiến lược (Strategy Design) | 15 / 15 |
+| Chất lượng truy xuất (Retrieval Quality) | 10 / 10 |
+| Thuyết trình (Demo) | 5 / 5 |
+| **Tổng phần nhóm** | **40 / 40** |

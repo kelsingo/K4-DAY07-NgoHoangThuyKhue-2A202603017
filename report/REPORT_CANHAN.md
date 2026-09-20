@@ -162,6 +162,9 @@ Chạy **5 câu hỏi đánh giá của nhóm** trên mã nguồn cá nhân tron
 
 **Bao nhiêu câu hỏi trả về chunk có liên quan trong top-3?** 5 / 5
 
+**Lưu ý chuyên môn về chấm điểm:**
+> Cách chấm đúng theo yêu cầu của lab không chỉ dựa vào `doc_id` gold nằm trong top-3; ta phải kiểm tra xem đoạn chunk thực sự chứa thông tin trả lời và liệu agent có trả lời đúng hay không. Trong benchmark này, dữ liệu được chạy bằng `MockEmbedder` (MD5-based), nên score cho thấy mức độ tương đồng theo chuỗi và từ khóa hơn là ngữ nghĩa thực sự. Vì vậy, tôi đánh giá theo mức 2/1/0: `2` nếu gold ở top-1 và context chứa đáp án, `1` nếu gold ở top-2/3 nhưng câu trả lời vẫn hợp lý, `0` nếu không có trong top-3 hoặc context không trả lời được.
+
 **Điều hay nhất tôi học được từ cách đánh giá trong nhóm:**
 > Tôi học thấy rõ rằng retrieval quality không chỉ phụ thuộc vào chunking, mà còn phụ thuộc rất nhiều vào việc lựa chọn câu hỏi và metadata đúng với từng audience. Khi lọc theo `audience = buyer` hoặc `seller`, kết quả truy xuất ít nhiễu và dễ khớp đúng với ngữ cảnh nghiệp vụ hơn so với tìm kiếm không lọc.
 
